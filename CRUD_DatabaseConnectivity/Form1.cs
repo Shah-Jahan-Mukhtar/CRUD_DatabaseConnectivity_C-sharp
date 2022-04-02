@@ -19,7 +19,7 @@ namespace CRUD_DatabaseConnectivity
         SqlCommand command;
         DataTable data = new DataTable();
 
-        string db_connection = @"Data Source=DESKTOP-T2H5N7O\SQLEXPRESS;initial Catalog=students;Integrated Security=true";
+        string db_connection = @"Data Source=DESKTOP-T2H5N7O;Initial Catalog=students;Integrated Security=true";
 
         public Form1()
         {
@@ -89,21 +89,21 @@ namespace CRUD_DatabaseConnectivity
         {
             if (!string.IsNullOrWhiteSpace(name.Text) && !string.IsNullOrWhiteSpace(roll.Text) && !string.IsNullOrWhiteSpace(cnic.Text))
             {
-                try
-                {
-                    string sql = $"insert into student_table(Name,Roll_No,CNIC)" +
-                        $"values('{name.Text}','{roll.Text},{cnic.Text}')";
+             
+                
+                    string sql = $"insert into student_table(Name,Roll,CNIC)"+ 
+                        $"values('{name.Text}','{roll.Text}','{cnic.Text}')";
                     connection.Open();
                     command = new SqlCommand(sql, connection);
                     SqlDataAdapter adapter = new SqlDataAdapter();
                     adapter.InsertCommand = command;
                     MessageBox.Show(adapter.InsertCommand.ExecuteNonQuery().ToString() + "New Record added");
 
-                }
-                catch (Exception err)
-                {
-                    MessageBox.Show(err.Message);
-                }
+                connection.Close();
+                //catch (Exception err)
+                //{
+                  //  MessageBox.Show(err.Message);
+                //}
             }
             else
             {
