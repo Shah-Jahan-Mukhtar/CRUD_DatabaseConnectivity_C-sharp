@@ -61,7 +61,7 @@ namespace CRUD_DatabaseConnectivity
                 try
                 {
                     SqlDataReader dataReader;
-                    command = new SqlCommand("select * from student_table", this.connection);
+                    command = new SqlCommand("select * from dbo.student_table", this.connection);
                     this.connection.Open();
                     dataReader = command.ExecuteReader();
                     while(dataReader.Read())
@@ -111,6 +111,47 @@ namespace CRUD_DatabaseConnectivity
             }
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(!string.IsNullOrWhiteSpace(roll.Text))
+            {
+                foreach(DataRow row in data.Rows)
+                {
+                    if (row["Roll"].ToString() == roll.Text)
+                    {
+                        delete_database();
+                        data.Rows.Remove(row);
+                        break;
+
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Kindly fill the rollNo");
+            }
         }
+
+        private void delete_database()
+        {
+            try
+            {
+                connection.Open();
+                string sql = $"Delete from student_table where Roll={roll.Text}";
+                command = new SqlCommand(sql, connection);
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.DeleteCommand = command;
+                MessageBox.Show(adapter.DeleteCommand.ExecuteNonQuery().ToString() + "Row has been deleted");
+                dataGridView1.Refresh();
+                connection.Close();
+
+            }
+            catch(Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+    }
    
 }
