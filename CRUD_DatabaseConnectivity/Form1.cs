@@ -152,6 +152,42 @@ namespace CRUD_DatabaseConnectivity
                 MessageBox.Show(err.Message);
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if(!string.IsNullOrWhiteSpace(name.Text) && !string.IsNullOrWhiteSpace(cnic.Text))
+            {
+                foreach(DataRow row in data.Rows)
+                {
+                    if (row["Roll"].ToString() == roll.Text)
+                    {
+                        row["Name"] = name.Text;
+                        row["CNIC"] = roll.Text;
+                        update_database();
+                        break;
+                        
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Kindly fill the requirements");
+            }
+        }
+        private void update_database()
+        {
+            if(!string.IsNullOrWhiteSpace(name.Text) && !string.IsNullOrWhiteSpace(roll.Text) && !string.IsNullOrWhiteSpace(cnic.Text))
+            {
+                string sql = $"Update student_table" +
+                    $"set Name='{name.Text}',Roll={roll.Text},CNIC='{cnic.Text}' where (Roll={roll.Text}) ";
+                connection.Open();
+                command = new SqlCommand(sql, connection);
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.UpdateCommand = command;
+                //MessageBox.Show(adapter.UpdateCommand.ExecuteNonQuery().ToString() + "Data has been updated");
+                connection.Close();
+            }
+        }
     }
    
 }
