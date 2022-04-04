@@ -90,7 +90,7 @@ namespace CRUD_DatabaseConnectivity
             if (!string.IsNullOrWhiteSpace(name.Text) && !string.IsNullOrWhiteSpace(roll.Text) && !string.IsNullOrWhiteSpace(cnic.Text))
             {
              
-                
+             
                     string sql = $"insert into student_table(Name,Roll,CNIC)"+ 
                         $"values('{name.Text}','{roll.Text}','{cnic.Text}')";
                     connection.Open();
